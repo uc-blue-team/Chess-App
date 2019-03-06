@@ -1,0 +1,2 @@
+class FakeTestController < ApplicationController
+end
