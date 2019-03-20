@@ -1,45 +1,57 @@
 class Piece < ApplicationRecord
-	
-	Pieces.each do |piece|
-		if piece.y_position == start_y && piece.x_position.between?(start_x, dest_x)
-				return false
+	belongs_to :game
+
+	def lat_check(dest_x,dest_y)
+		start_x = x_position
+		start_y = y_position
+		game.pieces.each do |piece|
+			if piece.y_position == start_y && piece.x_position.between?(start_x, dest_x) && piece.x_position != start_x
+				return true
 			end
 		end
-		return true
+		return false
 	end
 
-	def long_check?(start_x,start_y,dest_x,dest_y)
-		Pieces.each do |piece|
-			if piece.x_position == start_x && piece.y_position.between?(start_y, dest_y)
-				return false
+	def long_check(dest_x,dest_y)
+		start_x = x_position
+		start_y = y_position
+		game.pieces.each do |piece|
+			if piece.x_position == start_x && piece.y_position.between?(start_y, dest_y) && piece.y_position != start_y
+				return true
 			end
 		end
-		return true
+		return false
 	end
 
-	def diag_check?(start_x,start_y,dest_x,dest_y)
-
+	def diag_check(dest_x,dest_y)
+		start_x = x_position
+		start_y = y_position
+		movement = (start_x - dest_x).abs
+		directionX = (dest_x - start_x)/(dest_x - start_x).abs
+		directionY = (dest_y - start_y)/(dest_y - start_y).abs
+		(1..movement).each do |i|
+			game.pieces.each do |piece|
+				if start_x + i * (directionX) == piece.x_position && start_y + i * (directionY) == piece.y_position
+					return true
+				end
+			end
+		end
+		return false
 	end
 
-	def valid_move?(start_x,start_y,dest_x,dest_y)
-		if ((start_y - dest_y)/(start_x - dest_x)).abs != (1) 
-			return false
-	end
-
-	def is_obstructed?(start_x,start_y,dest_x,dest_y)
-		start_x = x1
-		start_y = y1
-		dest_x = x2
-		dest_y = y2
-		if y1 == y2
-			return lat_check?(x1,y1,x2,y2)
-		elsif x1 == x2
-			return long_check?(x1,y1,x2,y2) 
-		elsif ((y1 - y2)/(x1 - x2)).abs.eql?(1)
-			return diag_check?(x1,y1,x2,y2)
+	def is_obstructed?(dest_x,dest_y)
+		start_x = x_position
+		start_y = y_position
+		if start_y == dest_y
+			return lat_check(dest_x,dest_y)
+		elsif start_x == dest_x
+			return long_check(dest_x,dest_y)
+		elsif ((start_y - dest_y)/(start_x - dest_x)).abs.eql?(1)
+			return diag_check(dest_x,dest_y)
 		else
-			return valid_move?(x1,y1,x2,y2)
+			raise "invalid input"
 		end
+	end
 
 
 end
