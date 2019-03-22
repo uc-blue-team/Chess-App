@@ -41,25 +41,18 @@ RSpec.describe Piece, type: :model do
 			expect(piece1.is_obstructed?(5,5)).to eq(false)
 		end
 
-		it "checks for valid inputs and raises error when invalid (not diagonal, vertical, or horizontal)" do
+		it "checks for valid inputs and raises error when invalid" do
 			game = Game.create
 			piece1 = Piece.create(x_position: 1 , y_position: 1, game: game)
 			piece2 = Piece.create(x_position: 1 , y_position: 3, game: game)
 			expect { piece1.is_obstructed?(3,5) }.to raise_error("invalid input")
 		end
 		
-		it "checks for inputs on the board and raises error when move is off the board (> 7)" do
+		it "checks for inputs on the board and raises error when move is off the board" do
 			game = Game.create
 			piece1 = Piece.create(x_position: 1 , y_position: 1, game: game)
 			piece2 = Piece.create(x_position: 1 , y_position: 3, game: game)
 			expect { piece1.is_obstructed?(1,8) }.to raise_error("invalid input")
-		end
-
-		it "checks for inputs on the board and raises error when move is off the board (< 0)" do
-			game = Game.create
-			piece1 = Piece.create(x_position: 1 , y_position: 1, game: game)
-			piece2 = Piece.create(x_position: 1 , y_position: 3, game: game)
-			expect { piece1.is_obstructed?(-1,3) }.to raise_error("invalid input")
 		end
 	end
 

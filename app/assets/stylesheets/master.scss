@@ -1,0 +1,23 @@
+@import "bootstrap";
+
+//------start chess board------//
+.board {
+  width:auto;
+  border: 2px solid black;
+  margin: auto;
+  box-shadow: 5px 5px 6px 2px black;
+}
+.board, td {
+  border: 1px solid black;
+}
+td {
+  width: 60px;
+  height: 60px;
+}
+tr:nth-child(even) td:nth-child(even) {
+  background: rgb(0, 0, 0)
+}
+tr:nth-child(odd) td:nth-child(odd) {
+  background: rgb(0, 0, 0)
+}
+//------end chess board------//
