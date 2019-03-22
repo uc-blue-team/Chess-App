@@ -33,14 +33,38 @@ class Piece < ApplicationRecord
 		return false
 	end
 
+	def off_the_board?(dest_x,dest_y)																				#check if move is off the board
+		if dest_x > 7 || dest_y > 7 || dest_x < 0 || dest_y < 0 	
+			return true
+		end
+	end
+
+	def is_lateral?(dest_x,dest_y)
+		if y_position == dest_y																								#check if the move is lateral
+			return true
+		end
+	end
+
+	def is_vertical?(dest_x,dest_y)																					#check if the move is vertical
+		if x_position == dest_x
+			return true
+		end
+	end
+
+	def is_diagonal?(dest_x,dest_y)
+		if ((y_position - dest_y)/(x_position - dest_x)).abs.eql?(1)					#check if move is diagonal
+			return true
+		end
+	end
+
 	def is_obstructed?(dest_x,dest_y)
-		if dest_x > 7 || dest_y > 7 || dest_x < 0 || dest_y < 0 							#check if move is on the board
+		if off_the_board?(dest_x,dest_y)							
 			raise "invalid input"
-		elsif y_position == dest_y																						#check if the move is lateral
+		elsif is_lateral?(dest_x,dest_y)
 			return lat_check(dest_x,dest_y)
-		elsif x_position == dest_x																						#check if the move is vertical
+		elsif is_vertical?(dest_x,dest_y)
 			return long_check(dest_x,dest_y)
-		elsif ((y_position - dest_y)/(x_position - dest_x)).abs.eql?(1)
+		elsif is_diagonal?(dest_x,dest_y)
 			return diag_check(dest_x,dest_y)																		#check if the move is diagonal
 		else																																	#returns error "invalid input" if the move is not diagonal, vertical, or lateral
 			raise "invalid input"
