@@ -42,7 +42,7 @@ class Piece < ApplicationRecord
 	def is_obstructed?(dest_x,dest_y)
 		start_x = x_position
 		start_y = y_position
-		if dest_x > 7 || dest_y > 7
+		if 0 > dest_x > 7 || 0 > dest_y > 7
 			raise "invalid input"
 		elsif start_y == dest_y
 			return lat_check(dest_x,dest_y)
