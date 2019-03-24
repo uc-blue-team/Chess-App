@@ -6,8 +6,13 @@ RSpec.describe GamesController, type: :controller do
 		expect(response).to render_template('new')
 	end
 
-	it 'assigns :name to kevin' do
-		get :new
-		expect(assigns(:name)).to eq 'kevin'
+	it 'returns :show view' do
+		get :show
+		expect(response).to render_template('show')
+	end
+
+	it 'returns :create view' do
+		get :create
+		expect(response).to render_template('create')
 	end
 end
