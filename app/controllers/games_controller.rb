@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   
   def new
+  	@name = 'kevin'
   end
 
   def create
