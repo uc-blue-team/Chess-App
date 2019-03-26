@@ -18,8 +18,8 @@ RSpec.describe Piece, type: :model do
 
 		it "checks horizontal obstruction and returns false when not obstructed" do
 			game = Game.create
-			piece1 = Piece.create(x_position: 1 , y_position: 1, game: game)
-			expect(piece1.is_obstructed?(5,1)).to eq(false)
+			piece1 = Piece.create(x_position: 2 , y_position: 2, game: game)
+			expect(piece1.is_obstructed?(5,2)).to eq(false)
 		end
 
 		it "checks vertical obstruction and returns true when obstructed (moving forward)" do
