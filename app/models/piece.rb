@@ -71,5 +71,13 @@ class Piece < ApplicationRecord
 		end
 	end
 
+	def is_occupied_by_friend?(dest_x,dest_y)
+		game.pieces.where(x_position: dest_x, y_position: dest_y, color: color).exists?
+	end
+
+	def is_occupied_by_enemy?(dest_x,dest_y)
+		game.pieces.where(x_position: dest_x, y_position: dest_y).not(color: color).exists?
+	end
+
 
 end
