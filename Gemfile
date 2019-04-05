@@ -67,3 +67,4 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'simple_form'
 gem 'jquery-rails'
 gem 'devise'
+gem 'rubocop', require: false
