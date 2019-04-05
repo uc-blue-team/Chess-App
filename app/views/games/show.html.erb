@@ -2,10 +2,16 @@
 <br/>
 
 <table class="board">
-  <% 8.times do%>
-    <%= '<tr>'.html_safe %>
-    <% 8.times do %>
-      <%= '<td></td>'.html_safe %>
+  <% 8.times do |row| %>
+    <tr>
+    <% 8.times do |column| %>
+      <td>
+        <% piece = @game.game_piece_at(row, column) %>
+        <% if piece %>
+          <div><%= piece.type %></div>
+        <% end %>
+      </td>
     <% end %>
+    </tr>
   <% end %>
 </table>

@@ -32,6 +32,9 @@ class Game < ApplicationRecord
 		King.create(game: self, color:"white", x_position: 4, y_position: 0)
 		King.create(game: self, color:"black", x_position: 4, y_position: 7)
 
-	end
-
+  end
+  
+  def game_piece_at(row, column)
+    pieces.find_by(y_position:row, x_position:column)
+  end
 end
