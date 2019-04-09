@@ -8,7 +8,7 @@ class King < Piece
 		elsif is_vertical?(dest_x,dest_y) && (dest_y == y_position + 1 or dest_y == y_position - 1) && !is_occupied_by_friend?(dest_x, dest_y)
 			return true
 		elsif is_diagonal?(dest_x,dest_y) && (x_position - dest_x).abs = 1 && !is_occupied_by_friend?(dest_x, dest_y)
-			return true
+		 	return true
 		else
 			raise "invalid input"
 		end
