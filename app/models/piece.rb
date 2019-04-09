@@ -79,5 +79,8 @@ class Piece < ApplicationRecord
 		game.pieces.where(x_position: dest_x, y_position: dest_y).not(color: color).exists?
 	end
 
+	def move_to!(dest_x,dest_y)
+		update_attributes(x_position: dest_x,y_position: dest_y)
+	end
 
 end
