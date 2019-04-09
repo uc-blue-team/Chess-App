@@ -80,7 +80,11 @@ class Piece < ApplicationRecord
 	end
 
 	def move_to!(dest_x,dest_y)
-		update_attributes(x_position: dest_x,y_position: dest_y)
+		if !is_obstructed?(dest_x,dest_y) && !is_occupied_by_friend?(dest_x,dest_y)
+			update_attributes(x_position: dest_x,y_position: dest_y)
+		else
+			raise "invalid input"
+		end
 	end
 
 end
