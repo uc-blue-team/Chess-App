@@ -37,4 +37,20 @@ class Game < ApplicationRecord
   def game_piece_at(row, column)
     pieces.find_by(y_position:row, x_position:column)
   end
+
+  def game_in_check?
+  	whiteKing = pieces.where(type:"King", color:"white")
+  	blackKing = pieces.where(type:"King", color:"black")
+  	pieces.where(color:"white").each do |piece|
+  		if piece.valid_move?(blackKing.x_position, blackKing.y_position)
+  			true
+  		end
+  	end
+  	pieces.where(color:"black").each do |piece|
+  		if piece.valid_move?(whiteKing.x_position, whiteKing.y_position)
+  			true
+  		end
+  	end
+  end
+
 end
