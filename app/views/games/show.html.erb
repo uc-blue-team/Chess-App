@@ -1,5 +1,13 @@
+<script>
+   $(document).ready(function() {
+    $( ".piece" ).draggable({
+      containment: '.board',
+      cursor: 'pointer'
+    });
+  } );
+</script>
+
 <h1 class="text-center">Chess Board</h1>
-<br/>
 
 <table class="board">
   <% 8.times do |row| %>
@@ -8,7 +16,7 @@
       <td>
         <% piece = @game.game_piece_at(row, column) %>
         <% if piece %>
-          <div><%= piece.type %></div>
+          <div class="piece"><%= piece.type %></div>
         <% end %>
       </td>
     <% end %>
