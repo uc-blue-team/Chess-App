@@ -39,18 +39,18 @@ class Game < ApplicationRecord
   end
 
   def game_in_check?
-  	whiteKing = pieces.where(type:"King", color:"white")
-  	blackKing = pieces.where(type:"King", color:"black")
-  	pieces.where(color:"white").each do |piece|
-  		if piece.valid_move?(blackKing.x_position, blackKing.y_position)
-  			true
-  		end
-  	end
-  	pieces.where(color:"black").each do |piece|
-  		if piece.valid_move?(whiteKing.x_position, whiteKing.y_position)
-  			true
-  		end
-  	end
+  	blackX = pieces.where(type:"King", color:"black").first.x_position
+  	blackY = pieces.where(type:"King", color:"black").first.y_position
+		whiteX = pieces.where(type:"King", color:"white").first.x_position
+		whiteY = pieces.where(type:"King", color:"white").first.y_position
+		pieces.all.each do |piece|
+			if piece.color == "white" && piece.valid_move?(blackX, blackY)
+				return true
+			elsif piece.color == "black" && piece.valid_move?(whiteX, whiteY)
+				return true
+			end
+		end
+		return false
   end
 
 end

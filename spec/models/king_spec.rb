@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe King, type: :model do
-	describe "is_valid" do
+	describe "valid_move?" do
 
 	end
 end

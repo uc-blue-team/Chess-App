@@ -21,8 +21,6 @@ ActiveRecord::Schema.define(version: 2019_03_26_230727) do
     t.boolean "white_turn"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "white"
-    t.string "black"
     t.integer "white_id"
     t.integer "black_id"
   end
