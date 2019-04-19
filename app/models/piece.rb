@@ -20,9 +20,9 @@ class Piece < ApplicationRecord
 	end
 
 	def diag_check(dest_x,dest_y)																						#check diagonal moves
-		movement = (x_position - dest_x).abs																	#defines movement as magnitude of the move
-		directionX = (dest_x - x_position)/(dest_x - x_position).abs					#provides positive values for rightward movement, negative for leftward movement
-		directionY = (dest_y - y_position)/(dest_y - y_position).abs					#provides positive value for upward movement, negative for downward movement
+		movement = (x_position.to_i - dest_x.to_i).abs																	#defines movement as magnitude of the move
+		directionX = (dest_x.to_i - x_position.to_i)/(dest_x.to_i - x_position.to_i).abs					#provides positive values for rightward movement, negative for leftward movement
+		directionY = (dest_y.to_i - y_position.to_i)/(dest_y.to_i - y_position.to_i).abs					#provides positive value for upward movement, negative for downward movement
 		(1..movement).each do |i|																							#loops from 0 to magnitude, checking each piece if there is a piece inbetween the start and destination
 			game.pieces.each do |piece|
 				if x_position + i * (directionX) == piece.x_position && y_position + i * (directionY) == piece.y_position
@@ -34,7 +34,7 @@ class Piece < ApplicationRecord
 	end
 
 	def off_the_board?(dest_x,dest_y)																				#check if move is off the board
-		if dest_x > 7 || dest_y > 7 || dest_x < 0 || dest_y < 0 	
+		if dest_x.to_i > 7 || dest_y.to_i > 7 || dest_x.to_i < 0 || dest_y.to_i < 0 	
 			return true
 		end
 	end
@@ -52,7 +52,7 @@ class Piece < ApplicationRecord
 	end
 
 	def is_diagonal?(dest_x,dest_y)
-		if ((y_position - dest_y)/(x_position - dest_x)).abs.eql?(1)					#check if move is diagonal
+		if ((y_position.to_i - dest_y.to_i)/(x_position.to_i - dest_x.to_i)).abs.eql?(1)					#check if move is diagonal
 			return true
 		end
 	end
