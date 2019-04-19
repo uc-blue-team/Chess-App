@@ -77,5 +77,4 @@ RSpec.describe Piece, type: :model do
 			expect(piece1.is_obstructed?(5,5)).to eq(false)
 		end
 	end
-
 end

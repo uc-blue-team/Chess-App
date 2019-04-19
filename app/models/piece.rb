@@ -39,7 +39,7 @@ class Piece < ApplicationRecord
 
 	def off_the_board?(dest_x,dest_y)																				#check if move is off the board
 		if dest_x > 7 || dest_y > 7 || dest_x < 0 || dest_y < 0 	
-			return true
+			raise "invalid input"
 		end
 	end
 
