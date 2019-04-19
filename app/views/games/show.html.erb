@@ -1,13 +1,36 @@
 <script>
    $(document).ready(function() {
+     var updatePieceUrl = "<%= game_piece_path(@game, 'xxx')%>";
+     
     $( ".piece" ).draggable({
       containment: '.board',
       cursor: 'pointer'
     });
-    $(".piece").droppable({
-      drop: function()
+    $(".board td").droppable({
+      drop: function(event, ui) {
+        
+         var square = $(this);        
+         var row = square.parent();         
+         var columnIndex = row.children().index(square);   
+         var board = row.parent();         
+         var rowIndex = board.children().index(row);   
+         var pieceId = ui.draggable.data('id')
+                     
+
+        $.ajax({
+          type: 'PUT',
+          url: updatePieceUrl.replace('xxx', pieceId),
+          dataType: 'json',
+          data: {
+            piece: {
+              x_position: columnIndex,
+              y_position: rowIndex
+            }
+          }
+        }); 
+      }
     });
-  } );
+  });
 </script>
 
 <h1 class="text-center">Chess Board</h1>
@@ -19,7 +42,7 @@
       <td>
         <% piece = @game.game_piece_at(row, column) %>
         <% if piece %>
-          <div class="piece"><%= piece.type %></div>
+          <div class="piece" data-id="<%= piece.id %>"><%= piece.type %></div>
         <% end %>
       </td>
     <% end %>
