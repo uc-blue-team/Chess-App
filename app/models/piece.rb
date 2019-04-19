@@ -69,7 +69,7 @@ class Piece < ApplicationRecord
 			return lat_check(dest_x,dest_y)
 		elsif is_vertical?(dest_x,dest_y)
 			return long_check(dest_x,dest_y)
-		else is_diagonal?(dest_x,dest_y)
+		elsif is_diagonal?(dest_x,dest_y)
 			return diag_check(dest_x,dest_y)												#check if the move is diagonal
 		end
 	end
