@@ -1,6 +1,26 @@
 class Piece < ApplicationRecord
 	belongs_to :game
 
+	# This function assumes the move is valid
+	def move_to(new_x, new_y)
+
+		game.pieces.each do |piece|
+			# Check if the new_position is occupied
+			if piece.y_position == new_y and piece.x_position == new_x begin
+				# Capture the piece  
+				if piece.color != color begin
+					piece.destroy
+					break
+				end else begin
+					raise "Can't capture your own mate"
+					return	
+				end
+			end
+		end
+		x_position = new_x;
+		y_position = new_y;
+	end
+
 	def lat_check(dest_x,dest_y)																						#Checks if a lateral move is obstructed
 		game.pieces.each do |piece|																						#Loops across all pieces in the board to see if a piece is in between the start location and the destination
 			if piece.y_position == y_position && (piece.x_position.between?(dest_x, x_position) or piece.x_position.between?(x_position, dest_x)) && piece.x_position != x_position
