@@ -6,6 +6,8 @@ class PiecesController < ApplicationController
 		new_x_position = params[:x_position]
 		new_y_position = params[:y_position]
 
+		piece_mover = PieceMover.new(piece, new_x_position, new_y_position)
+		piece_mover.move
 		piece_selected.move_to!(new_x_position, new_y_position)
 
 		redirect_to game_path(current_game)
