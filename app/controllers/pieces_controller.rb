@@ -8,6 +8,11 @@ class PiecesController < ApplicationController
 
 		piece_selected.move_to!(new_x_position, new_y_position)
 
+		if current_game.game_in_check? 
+			flash[:alert] = "Game is in Check"
+		end
+
+
 		redirect_to game_path(current_game)
 
 	end

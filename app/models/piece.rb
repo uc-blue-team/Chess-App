@@ -22,8 +22,10 @@ class Piece < ApplicationRecord
 	end
 
 	def lat_check(dest_x,dest_y)																						#Checks if a lateral move is obstructed
-		game.pieces.each do |piece|																						#Loops across all pieces in the board to see if a piece is in between the start location and the destination
-			if piece.y_position == y_position && (piece.x_position.between?(dest_x, x_position) or piece.x_position.between?(x_position, dest_x)) && piece.x_position != x_position
+		movingRight = dest_x > x_position
+    movingLeft = !movingRight
+    game.pieces.each do |piece|																						#Loops across all pieces in the board to see if a piece is in between the start location and the destination
+			if piece.y_position == y_position && ((piece.x_position.between?((dest_x + 1), (x_position - 1)) && movingLeft) || (movingRight && piece.x_position.between?((x_position + 1), (dest_x - 1)))) && piece.x_position != x_position
 				return true
 			end
 		end
@@ -31,9 +33,11 @@ class Piece < ApplicationRecord
 	end
 
 	def long_check(dest_x,dest_y)
+    movingUp = dest_y > y_position
+    movingDown = !movingUp
 		game.pieces.each do |piece|																						#Checks if a vertical move is obstructed using the same technique as lateral moves
-			if piece.x_position == x_position && (piece.y_position.between?(dest_y, y_position) or piece.y_position.between?(y_position, dest_y)) && piece.y_position != y_position
-				return true
+			if piece.x_position == x_position && ((piece.y_position.between?((dest_y + 1), (y_position - 1)) && movingDown) || ( movingUp && piece.y_position.between?((y_position + 1), (dest_y - 1)))) && piece.y_position != y_position
+        return true
 			end
 		end
 		return false
@@ -55,7 +59,7 @@ class Piece < ApplicationRecord
 
 	def off_the_board?(dest_x,dest_y)																				#check if move is off the board
 		if dest_x > 7 || dest_y > 7 || dest_x < 0 || dest_y < 0 	
-			return true
+			raise "invalid input"
 		end
 	end
 
@@ -72,22 +76,21 @@ class Piece < ApplicationRecord
 	end
 
 	def is_diagonal?(dest_x,dest_y)
+    if (x_position - dest_x).eql?(0)
+      return false
+    end
 		if ((y_position - dest_y)/(x_position - dest_x)).abs.eql?(1)					#check if move is diagonal
 			return true
 		end
 	end
 
 	def is_obstructed?(dest_x,dest_y)
-		if off_the_board?(dest_x,dest_y)							
-			raise "invalid input"
-		elsif is_lateral?(dest_x,dest_y)
+		if is_lateral?(dest_x,dest_y)
 			return lat_check(dest_x,dest_y)
 		elsif is_vertical?(dest_x,dest_y)
 			return long_check(dest_x,dest_y)
 		elsif is_diagonal?(dest_x,dest_y)
-			return diag_check(dest_x,dest_y)																		#check if the move is diagonal
-		else																																	#returns error "invalid input" if the move is not diagonal, vertical, or lateral
-			raise "invalid input"
+			return diag_check(dest_x,dest_y)												#check if the move is diagonal
 		end
 	end
 
