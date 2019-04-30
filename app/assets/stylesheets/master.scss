@@ -2,22 +2,32 @@
 
 //------start chess board------//
 .board {
-  width:auto;
+  width: auto;
   border: 2px solid black;
   margin: auto;
-  box-shadow: 5px 5px 6px 2px black;
+  box-shadow: 5px 5px 6px 2px #8b4513;
 }
-.board, td {
-  border: 1px solid black;
+.board,
+td {
+  border: 0px;
 }
 td {
   width: 60px;
   height: 60px;
 }
 tr:nth-child(even) td:nth-child(even) {
-  background: rgb(0, 0, 0)
+  background: rgb(209, 139, 71);
 }
 tr:nth-child(odd) td:nth-child(odd) {
-  background: rgb(0, 0, 0)
+  background: rgb(209, 139, 71);
 }
 //------end chess board------//
+
+//------start piece------//
+
+.piece {
+  width: auto;
+  height: auto;
+  padding: 0.8em;
+  border: 1px solid blue;
+}
