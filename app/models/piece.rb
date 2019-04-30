@@ -90,4 +90,17 @@ class Piece < ApplicationRecord
 		end
 	end
 
+	def can_be_captured?
+		game.pieces.where(color: !color).each do |piece|
+			if piece.valid_move?(x_position, y_position)
+				return true
+			end
+		end
+		false
+	end
+
+	def can_be_obstructed?
+
+	end
+
 end

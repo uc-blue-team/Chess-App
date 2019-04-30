@@ -45,12 +45,40 @@ class Game < ApplicationRecord
 		whiteY = pieces.where(type:"King", color:"white").first.y_position
 		pieces.all.each do |piece|
 			if piece.color == "white" && piece.valid_move?(blackX, blackY)
+				@whitePieceCausingCheck = piece
 				return true
 			elsif piece.color == "black" && piece.valid_move?(whiteX, whiteY)
+				@blackPieceCausingCheck = piece
 				return true
 			end
 		end
 		return false
   end
 
+  def checkmate?
+  	whiteKing = pieces.where(type:"King", color:"white").first
+		blackKing = pieces.where(type:"King", color:"black").first
+		return false unless game_in_check?
+  	if @whitePieceCausingCheck.present?
+  		if @whitePieceCausingCheck.can_be_captured?
+  			return false
+  		elsif blackKing.move_out_of_check?
+  			return false
+  		elsif @whitePieceCausingCheck.can_be_obstructed?
+  			return false
+  		end
+  		return true
+  	end  	
+  	if @blackPieceCausingCheck.present?
+  		if @blackPieceCausingCheck.can_be_captured?
+  			return false
+  		elsif whiteKing.move_out_of_check?
+  			return false
+  		elsif @blackPieceCausingCheck.can_be_obstructed?
+  			return false
+  		end
+  		return true
+  	end
+  end
 end
+
